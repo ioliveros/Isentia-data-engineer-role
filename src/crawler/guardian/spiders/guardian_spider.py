@@ -3,16 +3,17 @@ import urllib
 import configparser
 import json
 from guardian.items import GuardianItem
+import re
 
 
 class GuardianSpider(scrapy.Spider):
     name = 'guardian'
     allowed_domains = ['theguardian.com']
     start_urls = [
-        'https://www.theguardian.com/australia-news/'
+        'https://www.theguardian.com/au'
     ]
     custom_settings = {
-        'DEPTH_LIMIT': 5
+        'DEPTH_LIMIT': 1
     }
 
     def __init__(self, category=None, *args, **kwargs):
@@ -26,8 +27,7 @@ class GuardianSpider(scrapy.Spider):
     def parse(self, response):
         for href in response.css("a::attr('href')"):
             link = href.extract()
-            if link.startswith(
-                    'https://www.theguardian.com/australia-news/2016/aug/'):
+            if re.search("^https://www.theguardian.com/[a-zA-Z\-/]+/2016/aug/", link):
                 yield scrapy.Request(link, callback=self.parse_item)
             # Recursively parse the all the links in the page
             elif link.startswith('https://www.theguardian.com/'):
