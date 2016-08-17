@@ -1,6 +1,8 @@
 import scrapy
 import urllib
 import configparser
+import json
+from guardian.items import GuardianItem
 
 
 class GuardianSpider(scrapy.Spider):
@@ -32,7 +34,13 @@ class GuardianSpider(scrapy.Spider):
         url = 'https://www.readability.com/api/content/v1/parser?'
         url = url + 'token=' + self.parser_token + '&'
         url = url + 'url=' + response.url
-        with open('output.txt', 'a') as f:
-            with urllib.request.urlopen(url) as req:
-                f.write(url + '\n')
-                f.write(req.read().decode('utf-8'))
+        with urllib.request.urlopen(url) as req:
+            result = json.loads(req.read().decode('utf-8'))
+            item = GuardianItem()
+            item['title'] = result.get('title')
+            item['author'] = result.get('author')
+            item['excerpt'] = result.get('excerpt')
+            item['url'] = result.get('url')
+            item['date'] = result.get('date_published')
+            item['content'] = result.get('content')
+            yield item

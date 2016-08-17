@@ -15,4 +15,4 @@ class GuardianItem(scrapy.Item):
     excerpt = scrapy.Field()
     content = scrapy.Field()
     date = scrapy.Field()
-    title = scrap.Field()
+    title = scrapy.Field()
