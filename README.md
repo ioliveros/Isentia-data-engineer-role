@@ -82,6 +82,7 @@ gunicorn app:app
 
   * **Code:** 200 <br />
     **Content:**
+
     ```json
     {
       "[article-id]": {
@@ -92,6 +93,7 @@ gunicorn app:app
       }
     }
     ```
+
 * **Error Response:**
 
   * **Code** 404 Not Found <br />
@@ -99,14 +101,17 @@ gunicorn app:app
 
   * **Code:** 400 Missing Parameter <br />
     **Content:**
+
     ```json
     {
       "title": "Missing parameter",
       "description": "The \"keyword\" parameter is required"
     }
     ```
+
   * **Code:** 500 Internal Error <br />
     **Content:**
+
     ```json
     {
       "title": "[Error title]",
