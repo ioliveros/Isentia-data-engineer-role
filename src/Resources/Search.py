@@ -22,7 +22,7 @@ class Search(object):
                 title="Database Error",
                 description="Cannot connect to database"
             )
-        result = search(keywords, db)
+        result = search(keywords, db.news)
         client.close()
         if result is None:
             raise falcon.HTTPNotFound()
@@ -30,16 +30,17 @@ class Search(object):
             resp.body = json.dumps(result)
 
 
-def search(keywords, db):
+def search(keywords, collection):
     if isinstance(keywords, str):
         search_str = "\"" + keywords + "\""
     elif isinstance(keywords, list):
         search_str = ''
         for keyword in keywords:
             search_str = search_str + "\"" + keyword + "\" "
-    print(search_str)
+    else:
+        return None
     try:
-        cursor = db.news.find(
+        cursor = collection.find(
             {
                 "$text": {
                     "$search": search_str
@@ -59,4 +60,5 @@ def search(keywords, db):
         result[article_id]['title'] = doc['title']
         result[article_id]['author'] = doc['author']
         result[article_id]['content'] = doc['content']
+        result[article_id]['url'] = doc['url']
     return result

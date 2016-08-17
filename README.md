@@ -61,7 +61,7 @@ gunicorn app:app
 **Search articles**
 ----
   Search articles which was scraped from theguardian.com by keywords.
-
+``
   The search behavior would perform the logical conjunction between keywords.
 * ****
 
@@ -87,7 +87,8 @@ gunicorn app:app
       "[article-id]": {
         "title": "blah",
         "url": "blah",
-        "content": "blah"
+        "content": "blah",
+        "author": "blah"
       }
     }
     ```
