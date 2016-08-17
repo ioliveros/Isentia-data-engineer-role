@@ -8,9 +8,11 @@ import html2text
 class GuardianPipeline(object):
 
     def __init__(self):
+        # Filter the duplicate item
         self.ids_seen = set()
 
     def open_spider(self, spider):
+        # Read MongoDB connection from config file
         config = configparser.ConfigParser()
         config.read('../../config.ini')
         db_host = config.get('mongodb', 'host')

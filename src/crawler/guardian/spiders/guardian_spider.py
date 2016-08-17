@@ -12,11 +12,13 @@ class GuardianSpider(scrapy.Spider):
         'https://www.theguardian.com/australia-news/'
     ]
     custom_settings = {
-        'DEPTH_LIMIT': 1
+        'DEPTH_LIMIT': 5
     }
 
     def __init__(self, category=None, *args, **kwargs):
         super(GuardianSpider, self).__init__(*args, **kwargs)
+
+        # Read Readability API configuration
         config = configparser.ConfigParser()
         config.read('../../config.ini')
         self.parser_token = config.get('readability', 'token')
@@ -27,6 +29,7 @@ class GuardianSpider(scrapy.Spider):
             if link.startswith(
                     'https://www.theguardian.com/australia-news/2016/aug/'):
                 yield scrapy.Request(link, callback=self.parse_item)
+            # Recursively parse the all the links in the page
             elif link.startswith('https://www.theguardian.com/'):
                 yield scrapy.Request(link, callback=self.parse)
 
@@ -34,6 +37,8 @@ class GuardianSpider(scrapy.Spider):
         url = 'https://www.readability.com/api/content/v1/parser?'
         url = url + 'token=' + self.parser_token + '&'
         url = url + 'url=' + response.url
+
+        # Use Readability parser API to parse page
         with urllib.request.urlopen(url) as req:
             result = json.loads(req.read().decode('utf-8'))
             item = GuardianItem()
