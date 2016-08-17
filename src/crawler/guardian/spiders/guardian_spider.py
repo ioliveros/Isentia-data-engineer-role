@@ -18,7 +18,7 @@ class GuardianSpider(scrapy.Spider):
     def __init__(self, category=None, *args, **kwargs):
         super(GuardianSpider, self).__init__(*args, **kwargs)
         config = configparser.ConfigParser()
-        config.read('../config.ini')
+        config.read('../../config.ini')
         self.parser_token = config.get('readability', 'token')
 
     def parse(self, response):
