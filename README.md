@@ -4,8 +4,9 @@
 
 **Search articles**
 ----
-  Search articles which was scraped from theguardian.com by keyword
+  Search articles which was scraped from theguardian.com by keywords.
 
+  The search behavior would perform the logical conjunction between keywords.
 * ****
 
   `http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search`
@@ -16,7 +17,7 @@
 
 *  **URL Params**
 
-  **Required:**
+   **Required:**
 
    `keyword=[string]`
 
@@ -24,12 +25,6 @@
 * **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
-
-* **Error Response:**
-
-
-  * **Code:** 401 UNAUTHORIZED <br />
     **Content:**
     ```json
     {
@@ -40,12 +35,28 @@
       }
     }
     ```
+* **Error Response:**
 
-  OR
+  * **Code** 404 Not Found <br />
+    **Reason** Cannot find matching articles by the given keyword(s)
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+  * **Code:** 400 Missing Parameter <br />
+    **Content:**
+    ```json
+    {
+      "title": "Missing parameter",
+      "description": "The \"keyword\" parameter is required"
+    }
+    ```
+  * **Code:** 500 Internal Error <br />
+    **Content:**
+    ```json
+    {
+      "title": "[Error title]",
+      "description": "[Error Reason]"
+    }
+    ```
 
 * **Sample Call:**
 
-  /search?keyword=hello&keyword=world
+  /search?keyword=Australia&keyword=Olympics
