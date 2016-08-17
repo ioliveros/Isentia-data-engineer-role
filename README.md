@@ -65,7 +65,7 @@ gunicorn app:app
   The search behavior would perform the logical conjunction between keywords.
 * ****
 
-  `http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search`
+  [http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search](http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search)
 
 * **Method:**
 
@@ -117,3 +117,10 @@ gunicorn app:app
 * **Sample Call:**
 
   /search?keyword=Australia&keyword=Olympics
+
+## Test
+
+```bash
+cd [root directory]
+python -m unittest tests/test_search.py
+```
