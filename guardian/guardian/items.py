@@ -9,6 +9,10 @@ import scrapy
 
 
 class GuardianItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    domain = scrapy.Field()
+    url = scrapy.Field()
+    author = scrapy.Field()
+    excerpt = scrapy.Field()
+    content = scrapy.Field()
+    date = scrapy.Field()
+    title = scrap.Field()
