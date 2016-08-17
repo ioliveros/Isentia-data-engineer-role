@@ -61,11 +61,11 @@ gunicorn app:app
 **Search articles**
 ----
   Search articles which was scraped from theguardian.com by keywords.
-
+``
   The search behavior would perform the logical conjunction between keywords.
 * ****
 
-  `http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search`
+  [http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search](http://ec2-54-206-48-181.ap-southeast-2.compute.amazonaws.com/search)
 
 * **Method:**
 
@@ -87,7 +87,8 @@ gunicorn app:app
       "[article-id]": {
         "title": "blah",
         "url": "blah",
-        "content": "blah"
+        "content": "blah",
+        "author": "blah"
       }
     }
     ```
@@ -116,3 +117,10 @@ gunicorn app:app
 * **Sample Call:**
 
   /search?keyword=Australia&keyword=Olympics
+
+## Test
+
+```bash
+cd [root directory]
+python -m unittest tests/test_search.py
+```
